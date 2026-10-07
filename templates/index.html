@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concrete – RDC Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="chatbot minimized" id="chatbot">
+        <div class="chatbot-header">
+            <div class="title">
+                🤖 Concrete – RDC Assistant
+            </div>
+            <button class="toggle-btn" id="toggle-btn" title="Minimize/Expand">−</button>
+        </div>
+        <div class="chatbot-content">
+            <div class="chatbot-messages" id="messages"></div>
+            <div class="chatbot-input">
+                <button class="stop-btn" id="stop-btn">🛑 Stop Generation</button>
+
+                <!-- <div class="input-container">
+                    <textarea class="chat-input" id="chat-input" placeholder="Ask about RDC Concrete..." rows="1"></textarea>
+                    <button class="send-btn" id="send-btn" title="Send (Enter)">→</button>
+                </div> -->
+                <div class="input-container">
+                    <textarea class="chat-input" id="chat-input" placeholder="Ask about RDC Concrete..."
+                        rows="1"></textarea>
+
+                    <button class="mic-btn" id="mic-btn" title="Hold to Speak">🎤</button>
+
+                    <button class="send-btn" id="send-btn" title="Send (Enter)">→</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

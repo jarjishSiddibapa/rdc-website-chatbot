@@ -1,0 +1,313 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8fafc;
+    height: 100vh;
+    overflow: hidden;
+}
+
+header, nav { display: none !important; }
+
+.chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 380px;
+    height: 600px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    z-index: 9999;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: height 0.3s ease;
+}
+
+.chatbot.minimized {
+    height: 60px !important;
+}
+
+.chatbot-header {
+    height: 60px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: white;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+    z-index: 10000;
+}
+
+.chatbot-header:hover {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+
+.chatbot-header:active {
+    transform: scale(0.98);
+}
+
+.chatbot-header .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.chatbot-header .toggle-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+.chatbot-header .toggle-btn:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+.chatbot-header .toggle-btn.minimized {
+    font-size: 14px;
+}
+
+.chatbot-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #f8fafc;
+}
+
+.chatbot.minimized .chatbot-content {
+    display: none !important;
+}
+
+.chatbot-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #f8fafc;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+
+.chatbot-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatbot-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+.chatbot-messages::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Reduced height from 110px to 80px */
+.chatbot-input {
+    padding: 12px 16px;
+    border-top: 1px solid #e5e7eb;
+    background: white;
+    flex-shrink: 0;
+    height: auto;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+.chat-input {
+    width: 100%;
+    padding: 12px 48px 12px 16px; /* space for button */
+    border: 2px solid #e2e8f0;
+    border-radius: 24px;
+    font-size: 14px;
+    outline: none;
+    resize: none;
+    line-height: 1.4;
+    min-height: 48px;
+    max-height: 100px;
+    overflow-y: auto;
+    font-family: inherit;
+}
+
+.chat-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+}
+
+.chat-input:disabled {
+    background: #f8fafc;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.send-btn {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.send-btn:hover:not(:disabled) {
+    background: #2563eb;
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.send-btn:disabled {
+    background: #94a3b8;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.stop-btn {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white !important;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    transition: all 0.2s;
+    width: 100%;
+    display: none;
+    margin-bottom: 8px;
+}
+
+.stop-btn.show {
+    display: block !important;
+}
+
+.stop-btn:hover {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(239, 68, 68, 0.5);
+}
+
+.message {
+    display: flex;
+    margin-bottom: 12px;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.assistant {
+    justify-content: flex-start;
+}
+
+.message-bubble {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    white-space: pre-wrap;
+}
+
+.message.user .message-bubble {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    border-bottom-right-radius: 6px;
+}
+
+.message.assistant .message-bubble {
+    background: white;
+    color: #1e293b;
+    border: 1px solid #e2e8f0;
+    border-bottom-left-radius: 6px;
+}
+
+/* Add to bottom of style.css */
+.mic-btn {
+    position: absolute;
+    right: 50px; /* Sit to the left of the Send button */
+    bottom: 8px;
+    background: #f1f5f9;
+    color: #334155;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.mic-btn:hover {
+    background: #e2e8f0;
+    transform: scale(1.1);
+}
+
+.mic-btn.recording {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
